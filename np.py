@@ -37,9 +37,9 @@ def main():
     else:
         dropWaring("Файлы не заданы")
 
-    if "comands" in config:
-        for comand in config["comands"]:
-            doComand(comand)
+    if "commands" in config:
+        for commands in config["commands"]:
+            doCommands(commands)
     else:
         dropWaring("Команды не заданы")
 
@@ -72,9 +72,9 @@ def createFile(name, lines):
         dropWaring(name + " существует")
 
 
-def doComand(comand):
-    '''Выполняет команду comand'''
-    os.system(comand)
+def doCommands(commands):
+    '''Выполняет команду commands'''
+    os.system(commands)
 
 
 def dropError(str):
