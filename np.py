@@ -2,7 +2,7 @@
 # 
 #  np.py
 # 
-#  Created by w0rng on 22.12.2020.
+#  Created by w0rng on 12.09.2018.
 #  Copyright © 2020 w0rng. All rights reserved.
 # 
 
@@ -11,10 +11,10 @@ import json
 import sys
 import os
 
+
 def main():
     if len(sys.argv) < 2:
         dropError("не введен тип проекта")
-
 
     with open(os.path.expanduser("~")+"/.np.conf") as f:
         config = json.load(f)
@@ -43,6 +43,7 @@ def main():
     else:
         dropWaring("Команды не заданы")
 
+
 def createFolder(lst, folder=""):
     tmplist = lst
     if folder != "":
@@ -59,6 +60,7 @@ def createFolder(lst, folder=""):
         if type(tmplist) != list:
             createFolder(lst, path)
 
+
 def createFile(name, lines):
     if os.path.exists(name):
         f = open(name, 'w')
@@ -66,16 +68,20 @@ def createFile(name, lines):
             f.write(line+"\n")
     else:
         dropWaring(name + " существует")
-        
+
+
 def doComand(comand):
     os.system(comand)
+
 
 def dropError(str):
     print("Ошибка: " + str)
     exit(1)
 
+
 def dropWaring(str):
     print(str)
+
 
 if __name__ == "__main__":
     main()
