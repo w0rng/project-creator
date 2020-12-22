@@ -1,4 +1,11 @@
 #!/usr/bin/python3
+# 
+#  np.py
+# 
+#  Created by w0rng on 22.12.2020.
+#  Copyright © 2020 w0rng. All rights reserved.
+# 
+
 
 import json
 import sys
