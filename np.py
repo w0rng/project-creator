@@ -45,6 +45,7 @@ def main():
 
 
 def createFolder(lst, folder=""):
+    '''Создает папку lst с подпапками folders'''
     tmplist = lst
     if folder != "":
         tmplist = lst[folder]
@@ -62,6 +63,7 @@ def createFolder(lst, folder=""):
 
 
 def createFile(name, lines):
+    '''Создает файл name с содержимым lines'''
     if os.path.exists(name):
         f = open(name, 'w')
         for line in lines:
@@ -71,15 +73,18 @@ def createFile(name, lines):
 
 
 def doComand(comand):
+    '''Выполняет команду comand'''
     os.system(comand)
 
 
 def dropError(str):
+    '''Выводит ошибку str в консоль и закрывает программу'''
     print("Ошибка: " + str)
     exit(1)
 
 
 def dropWaring(str):
+    '''Выводит предупреждения str в консоль'''
     print(str)
 
 
