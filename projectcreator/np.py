@@ -16,60 +16,53 @@ def main():
     if len(sys.argv) < 2:
         dropError("не введен тип проекта")
 
-    with open(os.path.expanduser("~")+"/.np.conf") as f:
+    PROJECT_TYPE = sys.argv[1]
+    PATH_CONFIGS = os.path.expanduser("~") + '/.config/project_creator/'
+
+    if PROJECT_TYPE not in os.listdir(PATH_CONFIGS):
+        print('Нет такого проекта') 
+
+    with open(PATH_CONFIGS+PROJECT_TYPE) as f:
         config = json.load(f)
-
-    if sys.argv[1] not in config["types"]:
-        dropError("нет такого типа проекта")
-
-    config = config["types"][sys.argv[1]]
 
     if "path" in config:
         print("Создание папок")
-        createFolder(config["path"])
-    else:
-        dropWaring("Иерархия папок не указана")
+        create_folders(config["path"])
 
     if "files" in config:
         print("Создание файлов")
         for f in config["files"]:
-            createFile(f, config["files"][f])
-    else:
-        dropWaring("Файлы не заданы")
+            create_file(f, config["files"][f])
 
     if "commands" in config:
+        print("Выполнение команд")
         for commands in config["commands"]:
             doCommands(commands)
-    else:
-        dropWaring("Команды не заданы")
 
 
-def createFolder(lst, folder=""):
-    '''Создает папку lst с подпапками folders'''
-    tmplist = lst
-    if folder != "":
-        tmplist = lst[folder]
-    
-    for path in tmplist:
-        try:
-            if folder:
-                os.mkdir(folder + "/" + path)
-            else:
-                os.mkdir(path)
-        except OSError:
-            dropWaring(path + " существует")
-        if type(tmplist) != list:
-            createFolder(lst, path)
+def __get_folders(folders, path=''):
+    '''Возвращает пути к папкам'''
+    for folder in folders:
+        yield f'{path}{folder}/'
+        if len(folders[folder]):
+            yield from __get_folders(folders[folder], f'{path}{folder}/')
 
 
-def createFile(name, lines):
+def create_folders(folders):
+    '''Создает структуру папок'''
+    for path in __get_folders(folders):
+        if not os.path.exists(path):
+            os.mkdir(path)
+
+
+def create_file(name, lines):
     '''Создает файл name с содержимым lines'''
     if os.path.exists(name):
-        f = open(name, 'w')
-        for line in lines:
-            f.write(line+"\n")
-    else:
         dropWaring(name + " существует")
+        return None
+    with open(name, 'w') as file:
+        for line in lines:
+            file.write(line+'\n')
 
 
 def doCommands(commands):
