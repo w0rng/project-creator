@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 # 
-#  np.py
+#  create_project.py
 # 
 #  Created by w0rng on 12.09.2018.
 #  Copyright © 2020 w0rng. All rights reserved.
@@ -8,22 +8,25 @@
 
 
 import json
-import sys
 import os
 import logging
+import subprocess
 
 
-def main():
-    if len(sys.argv) < 2:
-        logging.error('не введен тип проекта')
-        exit(1)
-
-    project_type = sys.argv[1]
+def create(project_type, project_name):
     path_configs = os.path.expanduser("~") + '/.config/project_creator/'
 
+
     if project_type not in os.listdir(path_configs):
-        logging.error('Нет такого проекта')
+        logging.error(f'Нет {project_type} конфига проекта')
         exit(1)
+
+    if os.path.exists(project_name):
+        logging.error(f'Проект {project_name} уже существует')
+        exit(1)
+    else:
+        os.mkdir(project_name)
+        os.chdir(f'./{project_name}/')
 
     with open(path_configs+project_type) as f:
         config = json.load(f)
@@ -72,6 +75,3 @@ def run_command(commands):
     """Выполняет команду commands"""
     os.system(commands)
 
-
-if __name__ == '__main__':
-    main()
