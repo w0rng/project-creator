@@ -5,7 +5,7 @@
 #  Copyright © 2020 w0rng. All rights reserved.
 # 
 
-from .np import main
+from .main import main
 import os
 
 

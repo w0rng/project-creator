@@ -8,7 +8,7 @@
 
 import sys
 import logging
-from create_project import create
+from .create_project import create
 
 
 def check_create_command():
