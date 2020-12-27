@@ -10,32 +10,35 @@
 import json
 import sys
 import os
+import logging
 
 
 def main():
     if len(sys.argv) < 2:
-        drop_error('не введен тип проекта')
+        logging.error('не введен тип проекта')
+        exit(1)
 
     project_type = sys.argv[1]
     path_configs = os.path.expanduser("~") + '/.config/project_creator/'
 
     if project_type not in os.listdir(path_configs):
-        print('Нет такого проекта')
+        logging.error('Нет такого проекта')
+        exit(1)
 
     with open(path_configs+project_type) as f:
         config = json.load(f)
 
     if 'path' in config:
-        print('Создание папок')
+        logging.info('Создание папок')
         create_folders(config['path'])
 
     if 'files' in config:
-        print('Создание файлов')
+        logging.info('Создание файлов')
         for f in config['files']:
             create_file(f, config['files'][f])
 
     if 'commands' in config:
-        print('Выполнение команд')
+        logging.info('Выполнение команд')
         for commands in config['commands']:
             run_command(commands)
 
@@ -58,7 +61,7 @@ def create_folders(folders):
 def create_file(name, lines):
     """Создает файл name с содержимым lines"""
     if os.path.exists(name):
-        drop_waring(f'{name} существует')
+        logging.warning(f'{name} существует')
         return None
     with open(name, 'w') as file:
         for line in lines:
@@ -68,17 +71,6 @@ def create_file(name, lines):
 def run_command(commands):
     """Выполняет команду commands"""
     os.system(commands)
-
-
-def drop_error(error):
-    """Выводит ошибку error в консоль и закрывает программу"""
-    print(f'Ошибка: {error}')
-    exit(1)
-
-
-def drop_waring(waring):
-    """Выводит предупреждения waring в консоль"""
-    print(waring)
 
 
 if __name__ == '__main__':
