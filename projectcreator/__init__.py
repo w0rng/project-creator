@@ -15,6 +15,9 @@ __author__ = 'w0rng'
 
 user_dir = os.path.expanduser("~")
 
+if not os.path.exists(f'{user_dir}/.config/'):
+    os.mkdir(f'{user_dir}/.config/')
+
 if not os.path.exists(f'{user_dir}/.config/project_creator/'):
     os.mkdir(f'{user_dir}/.config/project_creator/')
 
