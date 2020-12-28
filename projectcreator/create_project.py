@@ -16,7 +16,7 @@ def create_project(project_type, project_name):
     path_configs = os.path.expanduser("~") + '/.config/project_creator/'
 
     if project_type not in os.listdir(path_configs):
-        logging.error(f'Нет {project_type} конфига проекта')
+        logging.error(f'Конфиг {project_type} не найден')
         exit(1)
 
     if os.path.exists(project_name):

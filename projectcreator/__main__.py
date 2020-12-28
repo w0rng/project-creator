@@ -11,6 +11,7 @@ import logging
 from create_project import create_project
 from list_projects import print_list_projects
 from create_config import create_config
+from remove_config import remove_config
 
 
 logging.basicConfig(
@@ -40,12 +41,20 @@ def check_create_config():
     create_config(sys.argv[2], sys.argv[3])
 
 
+def check_remove_config():
+    if len(sys.argv) < 3:
+        logging.error('Не введено название нового конфига')
+        exit(1)
+    remove_config(sys.argv[2])
+
+
 def print_help_info():
     print('Введите projectcreator create {config_name} {name}',
           'чтобы создать проект')
     print('Введите projectcreator list чтобы посмотреть список доступных конфигов')
     print('Введите projectcreator newconfig {config_name} {path}',
-          'чтобы создать конфиг из папки')
+          'чтобы сгенерировать конфиг')
+    print('Введите projectcreator remove {config_name} чтобы удалить конфиг')
 
 
 def main():
@@ -53,6 +62,7 @@ def main():
         'create': check_create_command,
         'list': print_list_projects,
         'newconfig': check_create_config,
+        'remove': check_remove_config
     }
 
     if len(sys.argv) < 2:
