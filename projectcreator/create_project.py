@@ -10,7 +10,6 @@
 import json
 import os
 import logging
-import subprocess
 
 
 def create(project_type, project_name):
@@ -74,4 +73,3 @@ def create_file(name, lines):
 def run_command(commands):
     """Выполняет команду commands"""
     os.system(commands)
-

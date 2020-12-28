@@ -1,5 +1,5 @@
 # 
-#  main.py
+#  __main__.py
 # 
 #  Created by w0rng on 28.12.2020.
 #  Copyright © 2020 w0rng. All rights reserved.
@@ -8,7 +8,8 @@
 
 import sys
 import logging
-from .create_project import create
+from create_project import create
+from list_projects import print_list_projects
 
 
 def check_create_command():
@@ -24,11 +25,13 @@ def check_create_command():
 
 def print_help_info():
     print('Введите projectcreator create {project_type} {name} чтобы создать проект')
+    print('Введите projectcreator list чтобы посмотреть список доступных конфигов')
 
 
 def main():
     commands = {
         'create': check_create_command,
+        'list': print_list_projects,
     }
 
     if len(sys.argv) < 2:
