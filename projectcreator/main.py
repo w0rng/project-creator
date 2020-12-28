@@ -49,12 +49,26 @@ def check_remove_config():
 
 
 def print_help_info():
-    print('Введите pjc create {config_name} {name}',
-          'чтобы создать проект')
-    print('Введите pjc list чтобы посмотреть список доступных конфигов')
-    print('Введите pjc newconfig {config_name} {path}',
-          'чтобы сгенерировать конфиг')
-    print('Введите pjc remove {config_name} чтобы удалить конфиг')
+    print('{:<40} {:<57}'.format(
+        'pjc create {config_name} {name}',
+        'Создать проект {name} из конфига {config_name}'
+    ))
+    print('{:<40} {:<57}'.format(
+        'pjc list',
+        'Вывести список доступных конфигов'
+    ))
+    print('{:<40} {:<57}'.format(
+        'pjc newconfig {config_name} {path}',
+        'Сгенерировать конфиг {config_name} на основе папки {path}'
+    ))
+    print('{:<40} {:<57}'.format(
+        'pjc remove {config_name}',
+        'Удалить конфиг {config_name}'
+    ))
+    print('{:<40} {:<57}'.format(
+        'pjc help',
+        'Вывести подсказку'
+    ))
 
 
 def main():
@@ -62,7 +76,8 @@ def main():
         'create': check_create_command,
         'list': print_list_projects,
         'newconfig': check_create_config,
-        'remove': check_remove_config
+        'remove': check_remove_config,
+        'help': print_help_info
     }
 
     if len(sys.argv) < 2:
@@ -73,6 +88,7 @@ def main():
         commands[command]()
     else:
         logging.warning('Команда не найдена')
+        print_help_info()
 
 
 if __name__ == "__main__":
