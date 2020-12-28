@@ -66,7 +66,7 @@ def create_file(name, lines):
         return None
     with open(name, 'w') as file:
         for line in lines:
-            file.write(line+'\n')
+            file.write(line)
 
 
 def run_command(commands):

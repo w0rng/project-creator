@@ -8,6 +8,7 @@
 import os
 import logging
 from config import IGNORE_PATHS
+import json
 
 
 def create_config(config_name, path):
@@ -21,16 +22,32 @@ def create_config(config_name, path):
         logging.error(f'Папка {config_name} не найдена')
         exit(1)
 
-    print(get_paths_config(path))
+    config = {
+        'path': get_paths_config(path),
+        'files': get_files_config(path)
+    }
+
+    with open(f'{path_configs}/{config_name}', 'w') as outfile:
+        json.dump(config, outfile, indent=4)
 
 
 def get_paths_config(path):
+    logging.info('Генерация списка папок')
     result = {}
     for item in __get_paths_structure(path):
         p = result
         for x in item.split('/'):
             p = p.setdefault(x, {})
     return result[path]
+
+
+def get_files_config(path):
+    logging.info('Генерация списка файлов')
+    result = {}
+    for i in __get_files_structure(path):
+        i = '/'.join(i.split('/')[1:])
+        result[i] = open(f'{path}/{i}', 'r').readlines()
+    return result
 
 
 def __get_paths_structure(path):
@@ -44,3 +61,15 @@ def __get_paths_structure(path):
 
         yield f'{path}/{i}'
         yield from __get_paths_structure(f'{path}/{i}')
+
+
+def __get_files_structure(path):
+    for i in os.listdir(path):
+        if not os.path.isdir(f'{path}/{i}'):
+            yield f'{path}/{i}'
+            continue
+        if i in IGNORE_PATHS:
+            logging.debug(f'Папка {i} проигнорированна')
+            continue
+
+        yield from __get_files_structure(f'{path}/{i}')
