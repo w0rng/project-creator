@@ -38,6 +38,8 @@ def get_paths_config(path):
         p = result
         for x in item.split('/'):
             p = p.setdefault(x, {})
+    if path not in result:
+        return {}
     return result[path]
 
 
