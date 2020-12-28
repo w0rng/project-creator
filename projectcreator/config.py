@@ -8,5 +8,10 @@
 IGNORE_PATHS = [
     '.git',
     '.venv',
-    'venv'
+    'venv',
+    '__pycache__'
+]
+
+IGNORE_FILES = [
+    'pyc',
 ]

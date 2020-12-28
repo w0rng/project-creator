@@ -4,7 +4,7 @@ from os.path import join, dirname
 
 
 setup(
-    name='projectcreator',
+    name='pjc',
     version=projectcreator.__version__,
     author=projectcreator.__author__,
     description='Package for create projects',
@@ -13,6 +13,6 @@ setup(
     packages=find_packages(),
     entry_points={
         'console_scripts':
-            ['projectcreator = projectcreator:main']
+            ['pjc = projectcreator.main:main']
     }
 )

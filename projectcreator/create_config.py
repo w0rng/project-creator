@@ -7,7 +7,7 @@
 
 import os
 import logging
-from config import IGNORE_PATHS
+from .config import IGNORE_PATHS, IGNORE_FILES
 import json
 
 
@@ -46,7 +46,8 @@ def get_files_config(path):
     result = {}
     for i in __get_files_structure(path):
         i = '/'.join(i.split('/')[1:])
-        result[i] = open(f'{path}/{i}', 'r').readlines()
+        with open(f'{path}/{i}', 'r', encoding='utf-8', errors='ignore') as file:
+            result[i] = file.readlines()
     return result
 
 
@@ -66,7 +67,8 @@ def __get_paths_structure(path):
 def __get_files_structure(path):
     for i in os.listdir(path):
         if not os.path.isdir(f'{path}/{i}'):
-            yield f'{path}/{i}'
+            if i.split('.')[-1] not in IGNORE_FILES:
+                yield f'{path}/{i}'
             continue
         if i in IGNORE_PATHS:
             logging.debug(f'Папка {i} проигнорированна')
