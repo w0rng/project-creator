@@ -1,10 +1,10 @@
 #!/usr/bin/python3
-# 
+#
 #  create_project.py
-# 
+#
 #  Created by w0rng on 12.09.2018.
 #  Copyright © 2020 w0rng. All rights reserved.
-# 
+#
 
 
 import json
@@ -12,9 +12,8 @@ import os
 import logging
 
 
-def create(project_type, project_name):
+def create_project(project_type, project_name):
     path_configs = os.path.expanduser("~") + '/.config/project_creator/'
-
 
     if project_type not in os.listdir(path_configs):
         logging.error(f'Нет {project_type} конфига проекта')
